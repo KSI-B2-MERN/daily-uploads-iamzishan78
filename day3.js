@@ -1,9 +1,8 @@
 console.log('************Arrays Function************')
-
 {
     console.log('**Sort Function**')
     let compare=(a,b)=>{
-        return b-a;
+        return a-b;
     }
     const array=[10,20,80,700,8,30,50]
 r= array.sort(compare)
@@ -12,10 +11,9 @@ console.log(array)
 }
 {
     console.log("**JOIN Function**")
-    array=[1,2,3,4,5]
-    narray= array.join('-')
-    console.log(narray)
-    console.log(array)
+    const array=[1,2,3,4,5]
+    let newarray=array.join('-')
+    console.log(newarray)
 }
 {
     console.log("**Array Concatination**") 
