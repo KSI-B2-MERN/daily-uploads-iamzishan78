@@ -34,4 +34,61 @@ module.exports = {
       };
     }
   },
+  resetPassword: () => {
+    try {
+      const resetPasswordResponse = authModel.resetPassword();
+      if (resetPasswordResponse.reponse) {
+        return {
+          response: resetPasswordResponse.reponse,
+        };
+      }
+      return {
+        error: resetPasswordResponse.error,
+      };
+    } catch (error) {
+      return {
+        error: error,
+      };
+    }
+  },
+  forgotPassword:()=>{
+
+    try {
+      const modelResponse=authModel.forgotPassword();
+      if(modelResponse.response){
+          return{
+            response:modelResponse.response
+          }
+      }
+      return{
+        response:modelResponse.error
+      }
+    } catch (error) {
+
+      return{
+        error:error
+      }
+      
+    }
+  },
+  logOut:()=>{
+
+    try {
+      const modelResponse=authModel.logOut();
+      if(modelResponse.response){
+          return{
+            response:modelResponse.response
+          }
+      }
+      return{
+        response:modelResponse.error
+      }
+    } catch (error) {
+
+      return{
+        error:error
+      }
+      
+    }
+  }
 };
