@@ -1,17 +1,40 @@
 const authService = require("../services/authService");
+const joi = require("joi")
+
+const signupSchema=joi.object().keys({
+  "firstName":joi.string().required().min(3),
+  "lastName": joi.string().required().min(3),
+  "email":joi.string().email().required(),
+  "password":joi.string().required().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+  "confirmPassword":joi.ref("password")
+});
+// {
+//   "firstName":"Zeeshan",
+//   "lastName":"Naseeb",
+//   "email":"zishan123@gamil.com",
+//   "password":"123456"
+
+// }
+
 module.exports = {
-  signUp: (req, res) => {
+  signUp: async (req, res) => {
     try {
-      console.log("body",req.body);
+
+      const validae = await signupSchema.validateAsync(req.body);
+
+      console.log("validate",validae);
+      //console.log("body",req.body);
       const serviceResponse = authService.signUp();
       if (serviceResponse.response) {
         res.send({
           response: serviceResponse.response,
         });
       }
-      res.send({
-        error: serviceResponse.error,
-      });
+      else{
+        res.send({
+          error: serviceResponse.error,
+        });
+      }
     } catch (error) {
       res.send({
         error: error,
