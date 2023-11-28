@@ -1,8 +1,8 @@
 module.exports = {
-    signUp: () => {
+    signUp: async (body) => {
       try {
         return {
-          reponse: "user signed up",
+          reponse: body,
         };
       } catch (error) {
         return {

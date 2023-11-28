@@ -19,21 +19,21 @@ const signupSchema=joi.object().keys({
 module.exports = {
   signUp: async (req, res) => {
     try {
-
       const validae = await signupSchema.validateAsync(req.body);
 
-      console.log("validate",validae);
+     console.log("validate",validae);
       //console.log("body",req.body);
-      const serviceResponse = authService.signUp();
-      if (serviceResponse.response) {
+      const serviceResponse = await authService.signUp(validae);
+      if (serviceResponse.error) {
         res.send({
-          response: serviceResponse.response,
+          error: serviceResponse.error,
         });
       }
       else{
         res.send({
-          error: serviceResponse.error,
+          response: serviceResponse.response,
         });
+        
       }
     } catch (error) {
       res.send({
