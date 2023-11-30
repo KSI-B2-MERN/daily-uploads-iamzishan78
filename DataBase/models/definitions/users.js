@@ -3,9 +3,9 @@
 const sequelize = require("../../bin/dbConnection");
 const { Model, DataTypes } = require("sequelize");
 
-class USERS extends Model {} // user class will be treated as a model(table) now after extending Model class.
+class Users extends Model {} // user class will be treated as a model(table) now after extending Model class.
 
-USERS.init(
+Users.init(
     {
         userId: {
             primaryKey: true,
@@ -32,7 +32,7 @@ USERS.init(
     sequelize,
     timestamps: true,
     paranoid: true,
-    modelName: "users",
+    modelName: "USERS",
 })
 
-module.exports = USERS;
+module.exports = Users;
