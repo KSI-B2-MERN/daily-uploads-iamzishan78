@@ -3,16 +3,35 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//token
+
+var session = require("express-session");
+var config = require("./config.json");
+
 var authRouter = require("./routes/authRouter");
+var roleRouter = require("./routes/roleRouter");
+var userRouter = require("./routes/userRouter")
 
 var app = express();
+
+
+// for session
+// app.use(
+//   session({
+//     secret:config.jwt.secret,
+//     saveUninitialized:false,
+//     cookie:{maxAge:3600000},
+//     resave:false
+//   })
+// )
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/auth", authRouter);
-
+app.use("/role",roleRouter);
+app.use("/user",userRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -1,5 +1,9 @@
 const authModel = require("../models/authModel");
 const bcrypt= require("bcrypt")
+const userModel=require("../models/userModel");
+const jwt = require("jsonwebtoken");
+const config = require("../config.json");
+
 module.exports = {
   signUp: async (body) => {
     try {
@@ -22,16 +26,43 @@ module.exports = {
       };
     }
   },
-  logIn: () => {
+  logIn: async (body) => {
     try {
-      const logInResponse = authModel.logIn();
-      if (logInResponse.reponse) {
+      // console.log("auth Service")
+      console.log("Email",body.email)
+      const logInResponse = await userModel.getUserByEmail(body.email);
+      // console.log(logInResponse.error);
+      console.log("logInResponse.response",logInResponse.response)
+      if (logInResponse.error || !logInResponse.response) {
         return {
-          response: logInResponse.reponse,
+          error: "invalid credentails",
         };
       }
+
+      const login = await bcrypt.compare(
+        body.password,
+        logInResponse.response.dataValues.password
+      );
+
+
+      if (!login){
+        return {
+          error: "invalid credentails",
+        };
+      }
+      delete logInResponse.response.dataValues.password;
+      console.log("Response in service",logInResponse)
+      const token = jwt.sign(
+        logInResponse.response.dataValues,
+        config.jwt.secret,
+        {
+          expiresIn: "1h",
+        }
+      );
+
       return {
-        error: logInResponse.error,
+        token: token,
+        data: logInResponse.response.dataValues,
       };
     } catch (error) {
       return {
@@ -39,6 +70,45 @@ module.exports = {
       };
     }
   },
+  // logIn:async (body) => {
+  //   try {
+  //     console.log("log in service")
+  //     const logInResponse = await userModel.getUserByEmail(body.email);
+  //    // if(logInResponse.response){console.log("Error FOUND")}
+  //     if( logInResponse.error  ||  !logInResponse.response){
+  //       // console.log("occured error",error)
+  //       return {
+  //         error:"Invalid Email OR Password 1"
+  //       }
+  //     }
+  //     const logIn = await bcrypt.compare(
+  //       body.password,
+  //       logInResponse.reponse.dataValues.password)
+  //     if (!logIn){
+  //       return{
+  //         error:"Invalid Email OR Password 2"
+  //       }
+  //     }
+  //     delete logInResponse.reponse.dataValues.password;
+  //     const token = jwt.sign(
+  //       logInResponse.response.dataValues,
+  //       config.jwt.secret,
+  //       {
+  //         expiresIn: "1h",
+  //       }
+  //     );
+
+  //     return {
+  //       token: token,
+  //       data: logInResponse.response.dataValues,
+  //     };
+
+  //   } catch (error) {
+  //     return {
+  //       error: error,
+  //     };
+  //   }
+  // },
   resetPassword: () => {
     try {
       const resetPasswordResponse = authModel.resetPassword();

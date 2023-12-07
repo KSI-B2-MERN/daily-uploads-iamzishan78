@@ -1,3 +1,5 @@
+//const {models}= require("./index");
+
 module.exports = {
     signUp: async (body) => {
       try {
@@ -42,7 +44,6 @@ module.exports = {
         return{
           error:error
         }
-        
       }
 
     },

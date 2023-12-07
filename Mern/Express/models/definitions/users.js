@@ -25,7 +25,7 @@ USERS.init(
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(34),
+            type: DataTypes.STRING(),
             allowNull: false,
         },
     }, {

@@ -7,5 +7,8 @@
     "password":"1234",
     "logging":false,
     "dialect":"postgres"
+    },
+    "jwt":{
+        "secret":"t/WDCnu+kzjQAWpk0E2s5QCa9408j7tvJEEPNKgMeP4="
     }
 }
