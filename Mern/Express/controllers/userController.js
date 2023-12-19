@@ -9,7 +9,6 @@ const createUserSchema = joi.object().keys({
   password: joi.string().required().pattern(new RegExp("^[a-zA-Z0-9]{3,255}$")),
   confirmPassword: joi.ref("password"),
 });
-
 const paginationSchema = joi.object().keys({
   pageNo: joi.number().positive().greater(0),
   limit: joi.number().valid(5),

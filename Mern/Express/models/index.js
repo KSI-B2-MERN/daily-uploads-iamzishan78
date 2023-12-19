@@ -7,10 +7,11 @@ const orders = require("./definitions/orders");
 const products = require("./definitions/products");
 const productVarations = require("./definitions/productVariations");
 const roles = require("./definitions/roles");
+const session = require("./definitions/session");
 
 // const models = [users,cartItems,carts,orderItems,orders,products,productVarations,roles];
 
-const models={users,cartItems,carts,orderItems,orders,products,roles,productVarations};
+const models={users,cartItems,carts,orderItems,orders,products,roles,productVarations,session};
 const db = {};
 
 //one to one relations
