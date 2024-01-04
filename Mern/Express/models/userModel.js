@@ -23,13 +23,20 @@ module.exports = {
   getUserByEmail: async (email) => {
     try {
       console.log("user Model")
-      const user = await models.users.findOne({
+      console.log("Email",email)
+      const users = await models.users.findOne({
         where: {
-          email: email,
+          email:email,
         },
+        attributes:{
+          exclude:[
+            "createdAt", "updatedAt", "deletedAt"
+          ],
+        }
       });
+      console.log("user-return ",users)
       return {
-        response: user,
+        response: users,
       };
     } catch (error) {
       return {

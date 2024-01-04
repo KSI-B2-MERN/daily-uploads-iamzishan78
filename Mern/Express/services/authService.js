@@ -3,6 +3,8 @@ const bcrypt= require("bcrypt")
 const userModel=require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const config = require("../config.json");
+const { models } = require("../models");
+const sessionModel = require("../models/sessionModel");
 
 module.exports = {
   signUp: async (body) => {
@@ -28,8 +30,8 @@ module.exports = {
   },
   logIn: async (body) => {
     try {
-      // console.log("auth Service")
-      console.log("Email",body.email)
+      console.log("auth Service")
+      console.log("Body",body.email)
       const logInResponse = await userModel.getUserByEmail(body.email);
       // console.log(logInResponse.error);
       console.log("logInResponse.response",logInResponse.response)
@@ -59,6 +61,13 @@ module.exports = {
           expiresIn: "1h",
         }
       );
+
+      const getSession = await sessionModel.getSessionByUserId(logInResponse.response.dataValues.userId)
+      if(getSession.error){
+        return{
+          error:"Not Exist"
+        }
+      }
 
       return {
         token: token,

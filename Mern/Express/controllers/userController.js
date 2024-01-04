@@ -9,6 +9,7 @@ const createUserSchema = joi.object().keys({
   password: joi.string().required().pattern(new RegExp("^[a-zA-Z0-9]{3,255}$")),
   confirmPassword: joi.ref("password"),
 });
+
 const paginationSchema = joi.object().keys({
   pageNo: joi.number().positive().greater(0),
   limit: joi.number().valid(5),
@@ -21,9 +22,9 @@ const getByIdSchema = joi.object().keys({
 module.exports = {
   createUser: async (req, res) => {
     try {
-        console.log("check 1")
-      const validate = await createUserSchema.validateAsync(req.body);
-      const createdUser = await userService.createUser(validate);
+      console.log("Body",req.body)
+      // const validate = await createUserSchema.validateAsync(req.body);
+      const createdUser = await userService.createUser(req.body);
       if (createdUser.error) {
         return res.send({
           error: createdUser.error,
@@ -37,7 +38,8 @@ module.exports = {
         error: error,
       });
     }
-  },  
+  },
+
   getAllUsers: async (req, res) => {
     try {
       const validate = await paginationSchema.validateAsync(req.query);
@@ -56,6 +58,7 @@ module.exports = {
       });
     }
   },
+
   deletesUser: async (req, res) => {
     try {
       const validate = await getByIdSchema.validateAsync(req.query);

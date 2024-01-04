@@ -25,10 +25,10 @@ const logInSchema = joi.object().keys({
 module.exports = {
   signUp: async (req, res) => {
     try {
+      console.log("Body ",req.body.password)
       const validae = await signupSchema.validateAsync(req.body);
 
       console.log("validate", validae);
-      //console.log("body",req.body);
       const serviceResponse = await authService.signUp(validae)
       if (serviceResponse.error) {
         res.send({
@@ -49,10 +49,10 @@ module.exports = {
   },
   logIn: async (req, res) => {
     try {
-      // console.log("log in controller")
-      const validate = await logInSchema.validateAsync(req.body);
-      // console.log("validate",validate)
-      const logInResponse = await authService.logIn(validate)
+      
+      //const validate = await logInSchema.validateAsync(req.body);
+      
+      const logInResponse = await authService.logIn(req.body)
       console.log("logInResponse", logInResponse)
 
       if (logInResponse.error) {

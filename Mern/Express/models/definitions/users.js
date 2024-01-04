@@ -9,7 +9,7 @@ USERS.init(
     {
         userId: {
             primaryKey: true,
-            type: DataTypes.STRING(90),
+            type: DataTypes.STRING(),
         },
         firstName: {
             type: DataTypes.STRING(34),
@@ -20,7 +20,7 @@ USERS.init(
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING(34),
+            type: DataTypes.STRING(),
             allowNull: false,
             unique: true,
         },

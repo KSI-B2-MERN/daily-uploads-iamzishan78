@@ -10,12 +10,27 @@ PRODUCTS.init(
         productId: {
             primaryKey: true,
             type: DataTypes.STRING(90),
-        },
-        productName: {
+          },
+          productName: {
             type: DataTypes.STRING(34),
             allowNull: false,
-            unique:true
-        },
+          },
+          images: {
+            type: DataTypes.ARRAY(DataTypes.STRING()),
+            // allowNull: false,
+          },
+          price: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+          },
+          quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+          },
+          description: {
+            type: DataTypes.STRING(),
+            allowNull: false,
+          },
     }, {
     sequelize,
     timestamps: true,

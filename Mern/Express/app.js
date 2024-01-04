@@ -3,6 +3,9 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+var cors = require("cors")
+
 //token
 
 var session = require("express-session");
@@ -10,7 +13,8 @@ var config = require("./config.json");
 
 var authRouter = require("./routes/authRouter");
 var roleRouter = require("./routes/roleRouter");
-var userRouter = require("./routes/userRouter")
+var userRouter = require("./routes/userRouter");
+var productRouter= require("./routes/productRouter")
 
 var app = express();
 
@@ -28,10 +32,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 app.use("/auth", authRouter);
 app.use("/role",roleRouter);
 app.use("/user",userRouter);
+app.use("/product",productRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

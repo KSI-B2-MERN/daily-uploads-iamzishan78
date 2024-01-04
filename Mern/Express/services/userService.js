@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 module.exports = {
   createUser: async (body) => {
     try {
-      console.log("check 2")
+      console.log("check 2",body)
       const userId = uuidV4();
 
       const user = await userModel.getUserByEmail(body.email);
